@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Scm') {
+            steps {
+                git 'https://github.com/awspandian/vasu.git'
+            }
+        }
+		stage('Build') {
+            steps {
+                bat 'mvn clean'
+				bat 'mvn install'
+            }
+        }
+		stage('deploy') {
+            steps {
+                bat 'xcopy /y "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\demo\\target\\sweet.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps"'
+            }
+        }
+    }
+}
